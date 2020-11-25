@@ -1,7 +1,10 @@
 package com.tcs.productrestapi.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,8 +21,13 @@ public class ProductController {
 	
 	
 	@GetMapping
-	public String getProducts() {
-		return "product";
+	public List<Product> getProducts() {
+		return productService.getProducts().get();
+	}
+	
+	@GetMapping("/{id}")
+	public Product getProductById(@PathVariable("id") int productId) {
+		return productService.getProductById(productId).get();
 	}
 	
 	@PostMapping("/create")
