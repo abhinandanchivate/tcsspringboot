@@ -19,16 +19,16 @@ public class ProductServiceImpl implements ProductService {
 	ProductRepository productRepository;
 	
 	@Override
-	public String createProduct(Product product) {
+	public Product createProduct(Product product) {
 		// TODO Auto-generated method stub
 		Product product2 = null;
 		try {
 			product2 = productRepository.save(product);
-			return "success";
+			return product2;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return "fail";
+			return null;
 		}
 	}
 
