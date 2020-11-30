@@ -1,6 +1,8 @@
 package com.tcs.productrestapi.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -43,9 +45,13 @@ public class ProductController {
 	
 	@DeleteMapping("/{id}")
 
-	public String deleteProductById(@PathVariable int id) { 
+	public Map<String, Boolean> deleteProductById(@PathVariable int id) throws ResourceNotFoundException { 
+		Product product = productService.getProductById(id).orElseThrow(()-> new ResourceNotFoundException("Product not found"));
 		
 		productService.deleteProduct(id);
-		return "success";
+		HashMap<String, Boolean> hashMap = new HashMap<>();
+		hashMap.put("deleted", Boolean.TRUE);
+		
+		return hashMap;
 	}
 }
