@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import com.tcs.productrestapi.exception.ResourceNotFoundException;
 import com.tcs.productrestapi.model.Product;
@@ -37,12 +41,16 @@ public class ProductController {
 		return ResponseEntity.ok().body(product);
 	}
 	
-	@PostMapping("/create")
-	public ResponseEntity<?> createProduct(@RequestBody Product product) {
+	@PostMapping
+	public ResponseEntity<?> createProduct(@RequestBody Product product,UriComponentsBuilder uriComponentsBuilder,HttpServletRequest request) {
 	
 		Product product2 = productService.createProduct(product);
+		UriComponents uriComponents = uriComponentsBuilder
+				.path(request.getRequestURI()+"/{id}")
+				.buildAndExpand(product2.getProductId());
 		
-	  return 	 ResponseEntity.created(null).body(product2);
+		
+	  return 	 ResponseEntity.created(uriComponents.toUri()).body(product2);
 	}
 	
 	@DeleteMapping("/{id}")
