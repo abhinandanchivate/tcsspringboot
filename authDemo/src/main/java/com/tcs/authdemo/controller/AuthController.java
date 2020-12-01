@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.tcs.authdemo.model.ERole;
 import com.tcs.authdemo.model.Role;
 import com.tcs.authdemo.model.User;
+import com.tcs.authdemo.payload.request.LoginRequest;
 import com.tcs.authdemo.payload.request.SignupRequest;
 import com.tcs.authdemo.payload.response.MessageResponse;
 import com.tcs.authdemo.repository.RoleRepository;
@@ -33,6 +34,10 @@ public class AuthController {
 	@Autowired
 	RoleRepository roleRepository;
 	
+	@PostMapping("/login")
+	public ResponseEntity<?> loginUser(@Valid @RequestBody LoginRequest loginRequest) {
+		return null;
+	}
 	@PostMapping("/signup")
 	
 	public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest ) {
