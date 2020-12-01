@@ -28,6 +28,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class User {
 
+	public User(String username2, String email2, String password2) {
+		// TODO Auto-generated constructor stub
+		this.email = email2;
+		this.username = username2;
+		this.password = password2;
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
