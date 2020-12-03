@@ -8,8 +8,12 @@ import org.springframework.stereotype.Component;
 
 import com.tcs.authdemo.security.services.UserDetailsImpl;
 
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.SignatureException;
+import io.jsonwebtoken.UnsupportedJwtException;
 
 @Component
 public class JwtUtils {
@@ -42,5 +46,25 @@ public class JwtUtils {
 	
 	public boolean validateJwtToken(String authToken) {
 		
+		try {
+			Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);
+			return true;
+		} catch (ExpiredJwtException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UnsupportedJwtException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (MalformedJwtException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SignatureException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
 	}
 }
